@@ -46,6 +46,17 @@ Stop the server
   $ docker-compose down
 ```
 
+### If error shell scripts
+```
+https://www.linuxsec.org/2017/08/bin-bashm-bad-interpreter.html
+```
+
+### Run if replica set script error
+```
+docker exec mongo1 /scripts/init.sh
+```
+and restart mongo-express or run again `./start.sh`
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

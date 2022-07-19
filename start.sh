@@ -2,6 +2,6 @@
 
 docker-compose up -d
 
-sleep 5
+sleep 20
 
 docker exec mongo1 /scripts/init.sh

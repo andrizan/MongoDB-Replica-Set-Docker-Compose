@@ -3,7 +3,7 @@ services:
   mongo1:
     hostname: mongo1
     container_name: mongo1
-    image: mongo:5.0.6
+    image: mongo:latest
     expose:
       - 27017
     ports:
@@ -18,7 +18,7 @@ services:
   mongo2:
     hostname: mongo2
     container_name: mongo2
-    image: mongo:5.0.6
+    image: mongo:latest
     expose:
       - 27017
     ports:
@@ -32,7 +32,7 @@ services:
   mongo3:
     hostname: mongo3
     container_name: mongo3
-    image: mongo:5.0.6
+    image: mongo:latest
     expose:
       - 27017
     ports:
@@ -43,7 +43,21 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
     volumes:
       - ./data/db3:/data/db
-
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express:latest
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo1:27017,mongo2:27017,mongo3:27017/?replicaSet=rs0
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+    ports:
+      - 8888:8081
+    restart: always
+    networks:
+      - replset-network
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
 
 networks:
   replset-network:
